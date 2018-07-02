@@ -17,12 +17,12 @@ import java.util.Comparator;
 
 public class Contacts extends Fragment {
     public Contacts(){ }
-    ListView listView = null;
+    ListView lv = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contacts, container, false);
-        listView = view.findViewById(R.id.listview_contacts);
+        lv = view.findViewById(R.id.listview_contacts);
 
         ContentResolver cr = getActivity().getContentResolver();
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
@@ -82,7 +82,7 @@ public class Contacts extends Fragment {
                 return arg1.compareTo(arg0);
             }
         });
-        listView.setAdapter(adapter);
+        lv.setAdapter(adapter);
 
         return view;
     }

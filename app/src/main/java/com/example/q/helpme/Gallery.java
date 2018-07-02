@@ -15,18 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
 public class Gallery extends Fragment {
 
     static final int PICK_IMAGE = 1;
-    public GridView gridViews;
+    public GridView gv;
     public static ArrayList<String> link = GalleryAdapter.getLinks();
 
     public Gallery() {}
@@ -48,16 +44,14 @@ public class Gallery extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = null;
-        view = inflater.inflate(R.layout.gallery, container, false);
-
-        gridViews = view.findViewById(R.id.listview_gallery);
+        View view = inflater.inflate(R.layout.gallery, container, false);
+        gv = view.findViewById(R.id.listview_gallery);
 
         dataSetting();
 
         //gridview item을 image와 link 보유.
 
-        gridViews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
@@ -80,7 +74,7 @@ public class Gallery extends Fragment {
         GalleryAdapter mAdapter = new GalleryAdapter();
 
         while(index < len){
-            ImageView iv = new ImageView(getActivity().getApplicationContext());
+            //ImageView iv = new ImageView(getActivity().getApplicationContext());
             String imgpath = allimage.get(index++);
             Log.d("img path is ", imgpath);
             Bitmap bm = BitmapFactory.decodeFile(imgpath);
@@ -89,6 +83,6 @@ public class Gallery extends Fragment {
             link.add(imgpath);
         }
 
-        gridViews.setAdapter(mAdapter);
+        gv.setAdapter(mAdapter);
     }
 }

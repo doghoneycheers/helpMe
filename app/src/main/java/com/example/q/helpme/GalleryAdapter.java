@@ -36,7 +36,7 @@ public class GalleryAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_sub, parent, false);
         }
 
-        ImageView iv_img = (ImageView) convertView.findViewById(R.id.image) ;
+        ImageView iv_img = convertView.findViewById(R.id.image) ;
         GalleryItem myItem = getItem(position);
         Log.d("links link is ", myItem.getLink());
         iv_img.setImageBitmap(myItem.getBm());
