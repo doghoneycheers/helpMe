@@ -19,15 +19,15 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private static boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)
-                    return false;
-            }
-        }
-        return true;
-    }
+//    private static boolean hasPermissions(Context context, String... permissions) {
+//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+//            for (String permission : permissions) {
+//                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)
+//                    return false;
+//            }
+//        }
+//        return true;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,9 @@ public class MainActivity extends AppCompatActivity {
         String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
 
-        if(hasPermissions(this, PERMISSIONS))
-            Toast.makeText(MainActivity.this,"you have permissions!",Toast.LENGTH_SHORT).show();
 
-
-
+        //if(hasPermissions(this, PERMISSIONS))
+        //    Toast.makeText(MainActivity.this,"you have permissions!",Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

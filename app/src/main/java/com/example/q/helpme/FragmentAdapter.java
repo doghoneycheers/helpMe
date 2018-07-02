@@ -15,9 +15,9 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                return new Fragment1();
+                return new Contacts();
             case 1 :
-                return new Fragment2();
+                return new Gallery();
             case 2 :
                 return new Fragment3();
             default:
