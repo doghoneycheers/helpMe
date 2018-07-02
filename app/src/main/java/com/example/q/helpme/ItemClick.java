@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+
 public class ItemClick extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,7 @@ public class ItemClick extends Activity {
         Log.d("position is here", link);
         Bitmap bm = BitmapFactory.decodeFile(link);
 
-        ImageView imageView = findViewById(R.id.image);
+        ImageView imageView = (ImageView) findViewById(R.id.image);
         imageView.setImageBitmap(bm);
     }
-
 }

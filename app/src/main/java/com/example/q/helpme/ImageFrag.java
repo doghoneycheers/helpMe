@@ -11,7 +11,8 @@ public class ImageFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState) {
-        View view = inflater.inflate(R.layout.imagefrag, container, false);
+        View view = null;
+            view = inflater.inflate(R.layout.imagefrag, container, false);
         return view;
     }
 }

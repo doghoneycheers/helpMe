@@ -1,15 +1,19 @@
 package com.example.q.helpme;
 
+import android.Manifest;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.support.v4.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,6 +26,11 @@ public class Contacts extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contacts, container, false);
+
+        if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            return view;
+        }
+
         lv = view.findViewById(R.id.listview_contacts);
 
         ContentResolver cr = getActivity().getContentResolver();
