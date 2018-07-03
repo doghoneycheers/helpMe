@@ -3,9 +3,12 @@ package com.example.q.helpme;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {
     private int tabCount;
+    private static final String TAG = "FragmentAdapter";
+
     public FragmentAdapter(FragmentManager fm, int tabCount){
         super(fm);
         this.tabCount=tabCount;
@@ -13,13 +16,16 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.d(TAG, "Error On Setting Fragment");
+
         switch (position) {
             case 0 :
                 return new Contacts();
             case 1 :
                 return new Gallery();
             case 2 :
-                return new Fragment3();
+//                return new Temp();
+                return new Gallery();
             default:
                 return null;
         }

@@ -11,16 +11,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.INTERNET};
     private static final int REQUEST_CONTACTS = 0;
     private static final int REQUEST_GALLERY = 1;
-    private static final int REQUEST_ALL = 2;
+    private static final int REQUEST_INTERNET = 2;
+    private static final int REQUEST_ALL = 3;
+    private static final String TAG = "MainActivity";
+
 
 
 //    private static boolean hasPermissions(Context context, String... permissions) {
@@ -84,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         // Creating TabPagerAdapter adapter
         viewPager = findViewById(R.id.pager);
         FragmentAdapter pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        Log.d(TAG, "Error On Setting Adapter");
+
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
