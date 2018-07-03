@@ -16,17 +16,17 @@
 
         <TextView
             android:id="@+id/textview_exchange_listviewheader1"
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_height="20dp"
             android:text="Name" />
         <TextView
             android:id="@+id/textview_exchange_listviewheader2"
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_height="20dp"
             android:text="Price" />
         <TextView
             android:id="@+id/textview_exchange_listviewheader3"
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_height="20dp"
             android:text="Date" />
 
@@ -36,6 +36,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_exchangerate" />
+
+
+    <TextView
+        android:id="@+id/load_sucess_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date" />
 
 <Button
     android:layout_width="match_parent"

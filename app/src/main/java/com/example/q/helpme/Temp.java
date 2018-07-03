@@ -39,6 +39,7 @@ import android.widget.SimpleAdapter;
 import java.util.HashMap;
 import java.util.TimerTask;
 import java.util.Timer;
+import android.content.Context;
 
 public class Temp extends Fragment {
     public Temp(){}
@@ -52,9 +53,9 @@ public class Temp extends Fragment {
     //private DialogFragment progressDialog = new DialogFragment();
     private TextView textviewJSONText;
 //    public ArrayList<ExchangeRate> exchangeRateList = new ArrayList<ExchangeRate>();
-//    public ArrayList<String> exchangeRateList = new ArrayList<>();
+    public ArrayList<String> exchangeRateList = new ArrayList<>();
 
-    private List<HashMap<String,String>> exchangeRateList = null;
+//    private List<HashMap<String,String>> exchangeRateList = null;
     private SimpleAdapter adapter = null;
     static int counter = 0;
 
@@ -71,38 +72,38 @@ public class Temp extends Fragment {
             return view;
         }
 
-        exchangeRateList = new ArrayList<HashMap<String,String>>();
+//        exchangeRateList = new ArrayList<HashMap<String,String>>();
 
         listView = view.findViewById(R.id.listview_exchangerate);
 
-        TimerTask tt = new TimerTask(){
-            @Override
-            public void run(){
+//        TimerTask tt = new TimerTask(){
+//            @Override
+//            public void run(){
+//
+//
+//                Log.e("Task No. " , String.valueOf(counter) );
+//                counter++;
+//            }
+//        };
+//
+//        Timer timer = new Timer();
+//        timer.schedule(tt,0,5000);
 
 
-                Log.e("Task No. " , String.valueOf(counter) );
-                counter++;
-            }
-        };
+//        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
+        textviewJSONText = view.findViewById(R.id.load_sucess_textview);
+        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
 
-        Timer timer = new Timer();
-        timer.schedule(tt,0,5000);
-
-
-        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
-//        textviewJSONText = view.findViewById(R.id.textview_main_jsontext);
-//        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
-
-        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //progressDialog.show();
-                getJSON();
-                Log.d(TAG,"JSON FINISHED");
-
-            }
-        });
+//        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                //progressDialog.show();
+//                getJSON();
+//                Log.d(TAG,"JSON FINISHED");
+//
+//            }
+//        });
 
         //set adapter here..
 //        ArrayAdapter<ExchangeRate> adapter = new ArrayAdapter<>(getContext(),
@@ -110,28 +111,31 @@ public class Temp extends Fragment {
 //                exchangeRateList);
 
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-//                android.R.layout.simple_list_item_1,
-//                exchangeRateList);
-//        Log.d(TAG,"ARRAYLIST is :: " + exchangeRateList);
-//
-////         Assign adapter to ListView
-//        adapter.sort(new Comparator<String>(){
-//
-//            @Override
-//            public int compare(String arg1,String arg0){
-//                return arg1.compareTo(arg0);
-//            }
-//        });
-//        lv.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1,
+                exchangeRateList);
+        Log.d(TAG,"ARRAYLIST is :: " + exchangeRateList);
+
+//         Assign adapter to ListView
+        adapter.sort(new Comparator<String>(){
+
+            @Override
+            public int compare(String arg1,String arg0){
+                return arg1.compareTo(arg0);
+            }
+        });
+        listView.setAdapter(adapter);
+        getJSON();
+
+
 //
 //        getJSON();
-        String[] from = new String[]{"Name", "Price","Date"};
-        int[] to = new int[] {R.id.textview_exchange_listviewdata1, R.id.textview_exchange_listviewdata2,
-                R.id.textview_exchange_listviewdata3};
-        adapter = new SimpleAdapter(getContext(), exchangeRateList, R.layout.listview_items, from, to);
-        listView.setAdapter(adapter);
-        Log.d(TAG,"Adapter Set");
+//        String[] from = new String[]{"Name", "Price","Date"};
+//        int[] to = new int[] {R.id.textview_exchange_listviewdata1, R.id.textview_exchange_listviewdata2,
+//                R.id.textview_exchange_listviewdata3};
+//        adapter = new SimpleAdapter(getContext(), exchangeRateList, R.layout.listview_items, from, to);
+//        listView.setAdapter(adapter);
+//        Log.d(TAG,"Adapter Set");
 
 
 
@@ -146,25 +150,40 @@ public class Temp extends Fragment {
         public MyHandler(Temp temp) {
             weakReference = new WeakReference<>(temp);
         }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//
-//            Temp temp = weakReference.get();
-//
-//            if (temp != null) {
-//                switch (msg.what) {
-//
-//                    case LOAD_SUCCESS:
-//                        //fragment.progressDialog.dismiss();
-//
-//                        String jsonString = (String)msg.obj;
-//
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            Temp temp = weakReference.get();
+            Context context = helpMe.getAppContext();
+            if (temp != null) {
+                switch (msg.what) {
+
+                    case LOAD_SUCCESS:
+                        //fragment.progressDialog.dismiss();
+
+                        String jsonString = (String)msg.obj;
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                                android.R.layout.simple_list_item_1,
+                                temp.exchangeRateList);
+                        Log.d(TAG,"ARRAYLIST is :: " + temp.exchangeRateList);
+
+//         Assign adapter to ListView
+                        adapter.sort(new Comparator<String>(){
+
+                            @Override
+                            public int compare(String arg1,String arg0){
+                                return arg1.compareTo(arg0);
+                            }
+                        });
+                        temp.listView.setAdapter(adapter);
+
 //                        temp.textviewJSONText.setText(jsonString);
-//                        break;
-//                }
-//            }
-//        }
+                        break;
+                }
+            }
+        }
     }
 
     public void  getJSON() {
@@ -268,7 +287,7 @@ public class Temp extends Fragment {
                 String currencyPair = exchangeInfo.getString("name");
                 String price = exchangeInfo.getString("price");
                 String date = exchangeInfo.getString("date");
-//                String kr,exchangeRate;
+                String kr,exchangeRate;
 //                if(exchangeInfo.getString("kr")!=null)
 //                {
 //                    kr = exchangeInfo.getString("kr");
@@ -278,15 +297,15 @@ public class Temp extends Fragment {
 //                ExchangeRate exchangeRate = new ExchangeRate(currencyPair);
 //                exchangeRate.setPrice(Float.parseFloat(price));
 //                exchangeRate.setDate(date);
-//                exchangeRate = currencyPair + " // " + price + " // " + date;
-//                exchangeRateList.add(exchangeRate);
+                exchangeRate = currencyPair + " // " + price + " // " + date;
+                exchangeRateList.add(exchangeRate);
 
-                HashMap<String,String> exRateInfoMap = new HashMap<String,String>();
-                exRateInfoMap.put("Name",currencyPair);
-                exRateInfoMap.put("Price",price);
-                exRateInfoMap.put("Date",date);
+//                HashMap<String,String> exRateInfoMap = new HashMap<String,String>();
+//                exRateInfoMap.put("Name",currencyPair);
+//                exRateInfoMap.put("Price",price);
+//                exRateInfoMap.put("Date",date);
 
-                exchangeRateList.add(exRateInfoMap);
+//                exchangeRateList.add(exRateInfoMap);
 
 
 

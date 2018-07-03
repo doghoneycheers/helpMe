@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:name="com.example.q.helpme.helpMe">
 
         <activity android:name=".MainActivity">
             <intent-filter>
