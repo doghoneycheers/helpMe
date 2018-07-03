@@ -90,20 +90,20 @@ public class Temp extends Fragment {
 //        timer.schedule(tt,0,5000);
 
 
-//        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
+        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
         textviewJSONText = view.findViewById(R.id.load_sucess_textview);
         textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
 
-//        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                //progressDialog.show();
-//                getJSON();
-//                Log.d(TAG,"JSON FINISHED");
-//
-//            }
-//        });
+        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //progressDialog.show();
+                getJSON();
+                Log.d(TAG,"JSON FINISHED");
+
+            }
+        });
 
         //set adapter here..
 //        ArrayAdapter<ExchangeRate> adapter = new ArrayAdapter<>(getContext(),
