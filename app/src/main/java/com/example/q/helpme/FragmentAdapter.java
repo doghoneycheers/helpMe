@@ -16,7 +16,8 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d(TAG, "Error On Setting Fragment");
+        if(position > this.getCount() || position < 0)
+            Log.d(TAG, "Error On Setting Fragment");
 
         switch (position) {
             case 0 :
@@ -24,8 +25,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
             case 1 :
                 return new Gallery();
             case 2 :
-//                return new Temp();
-                return new Gallery();
+                return new Temp();
             default:
                 return null;
         }
