@@ -5,23 +5,27 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
-public class Contacts extends Fragment {
+public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Contacts(){ }
     ListView lv = null;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +34,9 @@ public class Contacts extends Fragment {
         if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             return view;
         }
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout_contacts);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         lv = view.findViewById(R.id.listview_contacts);
 
@@ -94,5 +101,17 @@ public class Contacts extends Fragment {
         lv.setAdapter(adapter);
 
         return view;
+    }
+
+
+    @Override
+    public void onRefresh() {
+        //Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 500);
     }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_layout_gallery"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    >
 
     <GridView
         android:id="@+id/listview_gallery"
@@ -17,4 +18,4 @@
 
     </GridView>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

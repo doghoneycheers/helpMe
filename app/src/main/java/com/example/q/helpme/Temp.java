@@ -2,11 +2,13 @@ package com.example.q.helpme;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,8 +43,10 @@ import java.util.TimerTask;
 import java.util.Timer;
 import android.content.Context;
 
-public class Temp extends Fragment {
+public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Temp(){}
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private static final String TAG = "apitest";
     public static final int LOAD_SUCCESS = 101;
@@ -72,9 +76,13 @@ public class Temp extends Fragment {
             return view;
         }
 
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout_exchangerate);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
 //        exchangeRateList = new ArrayList<HashMap<String,String>>();
 
         listView = view.findViewById(R.id.listview_exchangerate);
+
 
 //        TimerTask tt = new TimerTask(){
 //            @Override
@@ -89,27 +97,27 @@ public class Temp extends Fragment {
 //        Timer timer = new Timer();
 //        timer.schedule(tt,0,5000);
 
-
-        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
-        textviewJSONText = view.findViewById(R.id.load_sucess_textview);
-        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
-
-        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //progressDialog.show();
-                getJSON();
-                Log.d(TAG,"JSON FINISHED");
-
-            }
-        });
+//
+//        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
+//        textviewJSONText = view.findViewById(R.id.load_sucess_textview);
+//        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
+//
+//        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                //progressDialog.show();
+//                getJSON();
+//                Log.d(TAG,"JSON FINISHED");
+//
+//            }
+//        });
 
         //set adapter here..
 //        ArrayAdapter<ExchangeRate> adapter = new ArrayAdapter<>(getContext(),
 //                android.R.layout.simple_list_item_1,
 //                exchangeRateList);
-
+        getJSON();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1,
@@ -125,7 +133,7 @@ public class Temp extends Fragment {
             }
         });
         listView.setAdapter(adapter);
-        getJSON();
+
 
 
 //
@@ -143,6 +151,17 @@ public class Temp extends Fragment {
     }
 
     private final MyHandler mHandler = new MyHandler(this);
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                getJSON();
+            }
+        }, 2000);
+    }
 
     private static class MyHandler extends Handler {
         private final WeakReference<Temp> weakReference;
@@ -178,6 +197,7 @@ public class Temp extends Fragment {
                             }
                         });
                         temp.listView.setAdapter(adapter);
+                        temp.listView.setBackgroundColor(Color.LTGRAY);
 
 //                        temp.textviewJSONText.setText(jsonString);
                         break;

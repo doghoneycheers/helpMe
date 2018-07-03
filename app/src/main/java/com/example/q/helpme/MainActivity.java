@@ -25,25 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ALL = 3;
     private static final String TAG = "MainActivity";
 
-
-
-//    private static boolean hasPermissions(Context context, String... permissions) {
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-//            for (String permission : permissions) {
-//                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)
-//                    return false;
-//            }
-//        }
-//        return true;
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_ALL);
-        //    Toast.makeText(MainActivity.this,"you have permissions!",Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,16 +40,14 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Pictures"));
         tabLayout.addTab(tabLayout.newTab().setText("?"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//        if(!hasPermissions(this, PERMISSIONS)){
-//                    ActivityCompat.requestPermissions(this, PERMISSIONS, 3);
-//        }
-        // Creating TabPagerAdapter adapter
+
+        //ActivityCompat.requestPermissions(this, PERMISSIONS, 3);
+
         viewPager = findViewById(R.id.pager);
         FragmentAdapter pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override

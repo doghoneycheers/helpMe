@@ -9,9 +9,11 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +24,12 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gallery extends Fragment {
+public class Gallery extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     static final int PICK_IMAGE = 1;
     public GridView gv;
     public static ArrayList<String> link = GalleryAdapter.getLinks();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public Gallery() {}
 
@@ -52,6 +55,9 @@ public class Gallery extends Fragment {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return view;
         }
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout_gallery);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         gv = view.findViewById(R.id.listview_gallery);
 
@@ -92,5 +98,15 @@ public class Gallery extends Fragment {
         }
 
         gv.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 500);
     }
 }
