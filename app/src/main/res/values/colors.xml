@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="vermelho_debito">#cc0000</color>
+    <color name="azul_credito">#4c4cff</color>
+    <color name="preto_bloqueado">#000000</color>
+    <color name="verde_claro_fundo_lista">#CFDBC5</color>
+    <color name="branco">#ffffff</color>
+    <color name="amarelo_corrige">#cccc00</color>
+    <color name="verde_confirma">#66b266</color>
 </resources>
