@@ -1,54 +1,54 @@
 package com.example.q.helpme;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+        import android.Manifest;
+        import android.content.pm.PackageManager;
+        import android.support.v4.app.Fragment;
+        import android.os.Handler;
+        import android.os.Message;
+        import android.os.Bundle;
+        import android.support.v4.content.ContextCompat;
+        import android.support.v4.widget.SwipeRefreshLayout;
+        import android.text.method.ScrollingMovementMethod;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.ListView;
+        import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.net.URL;
-import android.widget.SimpleAdapter;
-import java.util.HashMap;
-import java.util.TimerTask;
-import java.util.Timer;
-import android.content.Context;
+        import java.security.cert.CertificateException;
+        import java.security.cert.X509Certificate;
+        import java.util.ArrayList;
+        import java.util.Comparator;
+        import java.util.List;
+        import java.io.BufferedReader;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.lang.ref.WeakReference;
+        import javax.net.ssl.HttpsURLConnection;
+        import javax.net.ssl.SSLContext;
+        import javax.net.ssl.TrustManager;
+        import javax.net.ssl.X509TrustManager;
+        import java.net.URL;
+        import android.widget.SimpleAdapter;
+        import java.util.HashMap;
+        import java.util.TimerTask;
+        import java.util.Timer;
+        import android.content.Context;
+        import android.graphics.Color;
+
 
 public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Temp(){}
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
     private static final String TAG = "apitest";
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public static final int LOAD_SUCCESS = 101;
     public ListView listView=null;
     private String REQUEST_URL = "https://api.manana.kr/exchange.json";
@@ -56,10 +56,10 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
     //private DialogFragment progressDialog = new DialogFragment();
     private TextView textviewJSONText;
-//    public ArrayList<ExchangeRate> exchangeRateList = new ArrayList<ExchangeRate>();
+    //    public ArrayList<ExchangeRate> exchangeRateList = new ArrayList<ExchangeRate>();
     public ArrayList<String> exchangeRateList = new ArrayList<>();
 
-//    private List<HashMap<String,String>> exchangeRateList = null;
+    //    private List<HashMap<String,String>> exchangeRateList = null;
     private SimpleAdapter adapter = null;
     static int counter = 0;
 
@@ -82,7 +82,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //        exchangeRateList = new ArrayList<HashMap<String,String>>();
 
         listView = view.findViewById(R.id.listview_exchangerate);
-
+        getJSON();
 
 //        TimerTask tt = new TimerTask(){
 //            @Override
@@ -97,11 +97,11 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //        Timer timer = new Timer();
 //        timer.schedule(tt,0,5000);
 
-//
+
 //        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
 //        textviewJSONText = view.findViewById(R.id.load_sucess_textview);
 //        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
-//
+
 //        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -117,7 +117,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //        ArrayAdapter<ExchangeRate> adapter = new ArrayAdapter<>(getContext(),
 //                android.R.layout.simple_list_item_1,
 //                exchangeRateList);
-        getJSON();
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1,
@@ -132,8 +132,11 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                 return arg1.compareTo(arg0);
             }
         });
-        listView.setAdapter(adapter);
 
+
+
+
+        listView.setAdapter(adapter);
 
 
 //
@@ -150,8 +153,6 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         return view;
     }
 
-    private final MyHandler mHandler = new MyHandler(this);
-
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
@@ -160,8 +161,10 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                 mSwipeRefreshLayout.setRefreshing(false);
                 getJSON();
             }
-        }, 2000);
+        }, 1000);
     }
+
+    private final MyHandler mHandler = new MyHandler(this);
 
     private static class MyHandler extends Handler {
         private final WeakReference<Temp> weakReference;
@@ -182,22 +185,35 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                         //fragment.progressDialog.dismiss();
 
                         String jsonString = (String)msg.obj;
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, temp.exchangeRateList)
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                                android.R.layout.simple_list_item_1,
-                                temp.exchangeRateList);
+                        {
+
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent){
+                                // Cast the list view each item as text view
+                                TextView item = (TextView) super.getView(position,convertView,parent);
+
+
+                                // Set the list view item's text color
+                                item.setTextColor(Color.parseColor("#ffffffff"));
+
+                                // return the view
+                                return item;
+                            }
+
+                        };
                         Log.d(TAG,"ARRAYLIST is :: " + temp.exchangeRateList);
 
 //         Assign adapter to ListView
-                        adapter.sort(new Comparator<String>(){
-
-                            @Override
-                            public int compare(String arg1,String arg0){
-                                return arg1.compareTo(arg0);
-                            }
-                        });
+//                        adapter.sort(new Comparator<String>(){
+//
+//                            @Override
+//                            public int compare(String arg1,String arg0){
+//                                return arg1.compareTo(arg0);
+//                            }
+//                        });
                         temp.listView.setAdapter(adapter);
-                        temp.listView.setBackgroundColor(Color.LTGRAY);
 
 //                        temp.textviewJSONText.setText(jsonString);
                         break;
