@@ -144,14 +144,45 @@ public class Temp extends Fragment {
                 } catch (Exception e) {
                     result = e.toString();
                 }
-
-
-                Message message = mHandler.obtainMessage(LOAD_SUCCESS, result);
-                mHandler.sendMessage(message);
+                if(jsonParser(result)) {
+                    Message message = mHandler.obtainMessage(LOAD_SUCCESS, result);
+                    mHandler.sendMessage(message);
+                }
             }
 
         });
         thread.start();
     }
+
+    public boolean jsonParser(String jsonString){
+        if(jsonString == null) return false;
+//        exchangeRateList = new ArrayList<ExchangeRate>();
+//        onCreate에서 미리 선언해야함.
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+
+//            exchageRateList.clear();
+
+            for( int i=0; i< jsonArray.length();i++){
+                JSONObject exchangeInfo = jsonArray.getJSONObject(i);
+
+                String currencyPair = exchangeInfo.getString("name");
+                String price = exchangeInfo.getString("price");
+                String date = exchangeInfo.getString("date");
+
+//                ExchangeRate exchageRate = new ExchangeRate(currencyPair);
+//                exchageRate.setPrice(Float.parseFloat(price));
+//                exchangeRate.setDate(date);
+//
+//                exchangeRateList.add(exchageRate);
+            }
+            return true;
+        }
+        catch (JSONException e) {
+            Log.d(TAG,e.toString());
+        }
+        return false;
+    }
+
 
 }
