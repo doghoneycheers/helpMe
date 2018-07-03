@@ -7,9 +7,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class ItemClick extends Activity {
+
+    ImageView imageView;
+    PhotoViewAttacher mAttacher;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +29,8 @@ public class ItemClick extends Activity {
         Log.d("position is here", link);
         Bitmap bm = BitmapFactory.decodeFile(link);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image);
+        imageView = findViewById(R.id.image);
         imageView.setImageBitmap(bm);
+        mAttacher = new PhotoViewAttacher(imageView);
     }
 }
