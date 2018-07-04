@@ -44,7 +44,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
         if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(),Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(),Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             return view;
         }
@@ -67,7 +67,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         StringBuilder result = new StringBuilder();
         while(cursor.moveToNext())
         {
-            result.append(cursor.getString(nameidx) + " : " + ContactsContract.RawContacts.CONTACT_ID + " :");
+            result.append(cursor.getString(nameidx) + ": ");
 
             String id = cursor.getString(ididx);
             Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?", new String[]{id},null);
@@ -138,19 +138,22 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 //                    Toast.LENGTH_SHORT
 //            ).show();
 
-            String rawPhone = lv.getItemAtPosition(position).toString();
-            final String cmp = "Mobile:";
+            String rawString = lv.getItemAtPosition(position).toString();
+            final String cmpPhone = "Mobile:";
+            final String cmpName=":";
 
-            int a1 = rawPhone.indexOf(cmp)+7;
-            final String phone = rawPhone.substring(a1);
+            int a2 = rawString.indexOf(cmpName);
+            int a1 = rawString.indexOf(cmpPhone)+7;
+            final String phone = rawString.substring(a1);
+            final String name = rawString.substring(0, a2);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("AlertDialog");
-            builder.setMessage("연락처");
+            builder.setTitle(name);
+            builder.setMessage(phone);
 
             //final String finalPhone = phone;
 
-            builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     String contactid = null;
@@ -172,29 +175,25 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
                 }
             });
-            builder.setNegativeButton("Call", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Call", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-//                    String contactid = null;
-//                    ContentResolver contentResolver = getActivity().getContentResolver();
-//
-//                    Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(finalPhone));
-//
-//                    Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null,null,null);
-//
-//                    if(cursor!=null){
-//                        while(cursor.moveToNext()){
-//                            //String contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
-//                            contactid= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
-//                        }
-//                        cursor.close();
-//                    }
+                    String tel = "tel:"+ phone;
+                    Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse(tel));
+                    try{
+                        startActivity(intent);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
 
-                    String tel = phone.substring(phone.indexOf(cmp));
+                }
 
-                    Intent intent=new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse(tel));
-
+            });
+            builder.setNegativeButton("Send", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String tel = "smsto:"+ phone;
+                    Intent intent=new Intent(Intent.ACTION_SENDTO, Uri.parse(tel));
                     try{
                         startActivity(intent);
                     } catch (Exception e){
@@ -227,7 +226,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 StringBuilder result = new StringBuilder();
                 while(cursor.moveToNext())
                 {
-                    result.append(cursor.getString(nameidx) + " : " + ContactsContract.RawContacts.CONTACT_ID + " :");
+                    result.append(cursor.getString(nameidx) +  ": ");
 
                     String id = cursor.getString(ididx);
                     Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?", new String[]{id},null);
