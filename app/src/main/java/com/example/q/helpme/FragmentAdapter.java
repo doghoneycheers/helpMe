@@ -23,7 +23,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
             case 0 :
                 return new Contacts();
             case 1 :
-                return new Gallery();
+                return new GridViewFragment();
             case 2 :
                 return new Temp();
             default:
