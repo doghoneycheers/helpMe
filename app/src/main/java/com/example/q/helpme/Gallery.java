@@ -96,6 +96,7 @@ public class Gallery extends Fragment implements SwipeRefreshLayout.OnRefreshLis
             mAdapter.addItem(thumbnail,imgpath);
             link.add(imgpath);
         }
+        
 
         gv.setAdapter(mAdapter);
     }

@@ -12,6 +12,7 @@ public class GalleryItem {
     }
     public String getLink() {return link;}
 
+
     public void setBm(Bitmap bm){
         this.bm = bm;
     }

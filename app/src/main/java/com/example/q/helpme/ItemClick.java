@@ -21,6 +21,7 @@ public class ItemClick extends Activity {
         setContentView(R.layout.imagefrag);
 
         // get intent data
+
         Intent i = getIntent();
 
         // Selected image id

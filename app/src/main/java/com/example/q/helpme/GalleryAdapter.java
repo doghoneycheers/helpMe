@@ -19,6 +19,7 @@ public class GalleryAdapter extends BaseAdapter {
     @Override
     public int getCount(){ return mItems.size(); }
 
+
     public static ArrayList<String> getLinks(){ return links; }
 
     @Override
