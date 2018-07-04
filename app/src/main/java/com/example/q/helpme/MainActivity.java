@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         // Creating TabPagerAdapter adapter
         viewPager = findViewById(R.id.pager);
         FragmentAdapter pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        Log.d(TAG, "Error On Setting Adapter");
+        Log.e(TAG, "Error On Setting Adapter");
 
         viewPager.setAdapter(pagerAdapter);
 

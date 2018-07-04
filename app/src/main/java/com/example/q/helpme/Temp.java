@@ -1,48 +1,51 @@
 package com.example.q.helpme;
 
-        import android.Manifest;
-        import android.content.pm.PackageManager;
-        import android.support.v4.app.Fragment;
-        import android.os.Handler;
-        import android.os.Message;
-        import android.os.Bundle;
-        import android.support.v4.content.ContextCompat;
-        import android.support.v4.widget.SwipeRefreshLayout;
-        import android.text.method.ScrollingMovementMethod;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.ListView;
-        import android.widget.TextView;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.Fragment;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.security.cert.CertificateException;
-        import java.security.cert.X509Certificate;
-        import java.util.ArrayList;
-        import java.util.Comparator;
-        import java.util.List;
-        import java.io.BufferedReader;
-        import java.io.InputStream;
-        import java.io.InputStreamReader;
-        import java.lang.ref.WeakReference;
-        import javax.net.ssl.HttpsURLConnection;
-        import javax.net.ssl.SSLContext;
-        import javax.net.ssl.TrustManager;
-        import javax.net.ssl.X509TrustManager;
-        import java.net.URL;
-        import android.widget.SimpleAdapter;
-        import java.util.HashMap;
-        import java.util.TimerTask;
-        import java.util.Timer;
-        import android.content.Context;
-        import android.graphics.Color;
-
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.URL;
+import android.widget.SimpleAdapter;
+import java.util.HashMap;
+import java.util.TimerTask;
+import java.util.Timer;
+import android.content.Context;
+import android.graphics.Color;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Temp(){}
@@ -317,13 +320,25 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
             exchangeRateList.clear();
 
+            String p = "(USD)+/[A-Z]*";
+//            Pattern pk = Pattern.compile("(USD)+/(KRW)+");
+
             for( int i=0; i< jsonArray.length();i++){
                 JSONObject exchangeInfo = jsonArray.getJSONObject(i);
 
                 String currencyPair = exchangeInfo.getString("name");
-                String price = exchangeInfo.getString("price");
-                String date = exchangeInfo.getString("date");
-                String kr,exchangeRate;
+
+                boolean paternMatches = Pattern.matches(p,currencyPair);
+                if(paternMatches==true){
+                    String currencyFrom = currencyPair.split("/")[0];
+                    String currencyTo = currencyPair.split("/")[1];
+                    DecimalFormat form = new DecimalFormat("#.###");
+                    String price = form.format(Float.parseFloat(exchangeInfo.getString("price")));
+                    String date = exchangeInfo.getString("date");
+
+                    if(exchangeInfo.has("en")) {
+                        String enName = exchangeInfo.getString("en");
+                        String exchangeRate;
 //                if(exchangeInfo.getString("kr")!=null)
 //                {
 //                    kr = exchangeInfo.getString("kr");
@@ -333,25 +348,26 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //                ExchangeRate exchangeRate = new ExchangeRate(currencyPair);
 //                exchangeRate.setPrice(Float.parseFloat(price));
 //                exchangeRate.setDate(date);
-                exchangeRate = currencyPair + " // " + price + " // " + date;
-                exchangeRateList.add(exchangeRate);
-
+//                Log.d(TAG,"enNAme : "+ enName);
+                        exchangeRate = enName + " (1 " + currencyFrom + ") : " + price + "(" + currencyTo + ")";
+                        exchangeRateList.add(exchangeRate);
 //                HashMap<String,String> exRateInfoMap = new HashMap<String,String>();
 //                exRateInfoMap.put("Name",currencyPair);
 //                exRateInfoMap.put("Price",price);
 //                exRateInfoMap.put("Date",date);
 
 //                exchangeRateList.add(exRateInfoMap);
+                    }
 
 
-
+                }
             }
 
             Log.d(TAG,"ArrayList : " + exchangeRateList);
             return true;
         }
         catch (JSONException e) {
-            Log.d(TAG,e.toString());
+            Log.d(TAG,"JSON Parsing Error : "+e.toString());
         }
         return false;
     }

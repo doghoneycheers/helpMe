@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/swipe_layout_exchangerate">
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
 
 
     <LinearLayout
@@ -25,7 +18,7 @@
 
         <TextView
             android:id="@+id/textview_exchange_listviewheader1"
-            android:layout_width="100dp"
+            android:layout_width="300dp"
             android:layout_height="20dp"
             android:text="Name" />
         <TextView
@@ -33,20 +26,28 @@
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:text="Price" />
-        <TextView
-            android:id="@+id/textview_exchange_listviewheader3"
-            android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:text="Date" />
+        <!--<TextView-->
+            <!--android:id="@+id/textview_exchange_listviewheader3"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:text="Date" />-->
 
     </LinearLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:id="@+id/swipe_layout_exchangerate">
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_exchangerate"
         />
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--<TextView-->
         <!--android:id="@+id/load_sucess_textview"-->
@@ -64,5 +65,3 @@
     <!--android:id="@+id/button_main_requestjson"/>-->
 
 </LinearLayout>
-
-</android.support.v4.widget.SwipeRefreshLayout>
