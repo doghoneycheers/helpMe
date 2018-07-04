@@ -18,11 +18,16 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.INTERNET};
+    private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.SEND_SMS};
     private static final int REQUEST_CONTACTS = 0;
     private static final int REQUEST_GALLERY = 1;
     private static final int REQUEST_INTERNET = 2;
-    private static final int REQUEST_ALL = 3;
+    private static final int REQUEST_ALL = 6;
     private static final String TAG = "MainActivity";
 
     @Override

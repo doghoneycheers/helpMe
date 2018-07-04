@@ -105,6 +105,7 @@ public class Gallery extends Fragment implements SwipeRefreshLayout.OnRefreshLis
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                dataSetting();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 500);
