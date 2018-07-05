@@ -62,11 +62,13 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 //        Log.d(TAG,"Contact id is " + ContactsContract.Contacts._ID);
 //        Log.d(TAG,"Contact display name is " + ContactsContract.Contacts.DISPLAY_NAME);
 
+        Log.d("Contacts getting Cursor ","CURSER!!!");
+
         StringBuilder result = new StringBuilder();
         while(cursor.moveToNext())
         {
             result.append(cursor.getString(nameidx) + ": ");
-
+            Log.d("Contacts Id : ", String.valueOf(ididx));
             String id = cursor.getString(ididx);
             Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?", new String[]{id},null);
             //Log.d(TAG,"Contact_id is " + ContactsContract.CommonDataKinds.Phone.CONTACT_ID);

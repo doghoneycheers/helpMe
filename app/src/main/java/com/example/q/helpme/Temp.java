@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.DecimalFormat;
@@ -73,12 +74,9 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     private String REQUEST_URL = "https://api.manana.kr/exchange.json";
     private String REQUEST_METHOD = "GET";
 
-    //private DialogFragment progressDialog = new DialogFragment();
     private TextView textviewJSONText;
-    //    public ArrayList<ExchangeRate> exchangeRateList = new ArrayList<ExchangeRate>();
     public ArrayList<String> exchangeRateList = new ArrayList<>();
 
-    //    private List<HashMap<String,String>> exchangeRateList = null;
     private SimpleAdapter adapter = null;
     static int counter = 0;
 
@@ -98,45 +96,9 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout_exchangerate);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-//        exchangeRateList = new ArrayList<HashMap<String,String>>();
 
         listView = view.findViewById(R.id.listview_exchangerate);
         getJSON();
-
-//        TimerTask tt = new TimerTask(){
-//            @Override
-//            public void run(){
-//
-//
-//                Log.e("Task No. " , String.valueOf(counter) );
-//                counter++;
-//            }
-//        };
-//
-//        Timer timer = new Timer();
-//        timer.schedule(tt,0,5000);
-
-
-//        Button buttonRequestJSON = view.findViewById(R.id.button_main_requestjson);
-//        textviewJSONText = view.findViewById(R.id.load_sucess_textview);
-//        textviewJSONText.setMovementMethod(new ScrollingMovementMethod());
-
-//        buttonRequestJSON.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                //progressDialog.show();
-//                getJSON();
-//                Log.d(TAG,"JSON FINISHED");
-//
-//            }
-//        });
-
-        //set adapter here..
-//        ArrayAdapter<ExchangeRate> adapter = new ArrayAdapter<>(getContext(),
-//                android.R.layout.simple_list_item_1,
-//                exchangeRateList);
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1,
@@ -157,15 +119,6 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
         ListViewExampleClickListener listViewExampleClickListener = new ListViewExampleClickListener();
         listView.setOnItemClickListener(listViewExampleClickListener);
-
-//
-//        getJSON();
-//        String[] from = new String[]{"Name", "Price","Date"};
-//        int[] to = new int[] {R.id.textview_exchange_listviewdata1, R.id.textview_exchange_listviewdata2,
-//                R.id.textview_exchange_listviewdata3};
-//        adapter = new SimpleAdapter(getContext(), exchangeRateList, R.layout.listview_items, from, to);
-//        listView.setAdapter(adapter);
-//        Log.d(TAG,"Adapter Set");
 
         return view;
     }
@@ -317,7 +270,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         Thread thread = new Thread(new Runnable() {
             public void run() {
 
-                String result;
+                String result = null;
 
                 try {
 
@@ -384,8 +337,11 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //                    Log.d(TAG,result);
 
 
-                } catch (Exception e) {
-                    result = e.toString();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 if(jsonParser(result)) {
@@ -415,8 +371,8 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
                 String currencyPair = exchangeInfo.getString("name");
 
-                boolean paternMatches = Pattern.matches(p,currencyPair);
-                if(paternMatches==true){
+                boolean patternMatches = Pattern.matches(p,currencyPair);
+                if(patternMatches==true){
                     String currencyFrom = currencyPair.split("/")[0];
                     String currencyTo = currencyPair.split("/")[1];
                     DecimalFormat form = new DecimalFormat("#.###");
@@ -426,24 +382,9 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                     if(exchangeInfo.has("en")) {
                         String enName = exchangeInfo.getString("en");
                         String exchangeRate;
-//                if(exchangeInfo.getString("kr")!=null)
-//                {
-//                    kr = exchangeInfo.getString("kr");
-//                    exchangeRate = currencyPair + "//"+ kr + " // " + price + " // " + date;
-//                }
-
-//                ExchangeRate exchangeRate = new ExchangeRate(currencyPair);
-//                exchangeRate.setPrice(Float.parseFloat(price));
-//                exchangeRate.setDate(date);
-//                Log.d(TAG,"enNAme : "+ enName);
                         exchangeRate = enName + " (1 " + currencyFrom + ") : " + price + "(" + currencyTo + ")";
                         exchangeRateList.add(exchangeRate);
-//                HashMap<String,String> exRateInfoMap = new HashMap<String,String>();
-//                exRateInfoMap.put("Name",currencyPair);
-//                exRateInfoMap.put("Price",price);
-//                exRateInfoMap.put("Date",date);
 
-//                exchangeRateList.add(exRateInfoMap);
                     }
 
 
