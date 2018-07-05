@@ -16,6 +16,5 @@ public class AppConstant {
     public static final String PHOTO_ALBUM = "androidhive";
 
     // supported file formats
-    public static final List<String> FILE_EXTN = Arrays.asList("jpg", "jpeg",
-            "png");
+    public static final List<String> FILE_EXTN = Arrays.asList("jpg", "jpeg", "png");
 }

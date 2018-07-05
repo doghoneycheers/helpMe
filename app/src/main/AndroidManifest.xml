@@ -27,10 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ItemClick"
-            android:label="@string/app_name">
-
-        </activity>
         <activity
             android:name="com.example.q.helpme.FullScreenViewActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
