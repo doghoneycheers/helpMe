@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">Helper</string>
     <string name="char_usd">$</string>
     <string name="real_time_exchange_rate">Real-time Exchange Rate</string>
     <string name="char_equal">=</string>
