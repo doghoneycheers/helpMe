@@ -4,4 +4,6 @@
     <string name="real_time_exchange_rate">Real-time Exchange Rate</string>
     <string name="char_equal">=</string>
     <string name="button_name_convertion">Convertion</string>
+    <string name="helper">Helper</string>
+    <string name="todo">TODO</string>
 </resources>
