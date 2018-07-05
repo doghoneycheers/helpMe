@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_limegreen">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_limegreen"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -14,12 +18,14 @@
         android:gravity="center_vertical"
         android:text="@string/helper"
         android:textAlignment="center"
+        android:fontFamily="@font/chewy"
         android:textColor="@color/floralwhite"
-        android:textSize="50sp" />
+        android:textSize="50sp"/>
 
     <ImageView
+        android:id="@+id/icon_helper"
         android:layout_width="match_parent"
-        android:layout_height="248dp"
+        android:layout_height="291dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/todo"

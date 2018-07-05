@@ -13,8 +13,8 @@
         <item name="android:fontFamily">@font/chewy</item>
     </style>
 
-    <!--<style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">-->
-        <!--<item name="android:windowBackground">@drawable/startimage2</item>-->
-    <!--</style>-->
+    <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
 
 </resources>
