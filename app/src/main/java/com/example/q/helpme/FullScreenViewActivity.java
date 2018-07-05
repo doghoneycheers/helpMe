@@ -23,7 +23,7 @@ public class FullScreenViewActivity extends Activity{
         utils = new Utils(getApplicationContext());
 
         Intent i = getIntent();
-        int position = i.getIntExtra("position", 0);
+        int position = i.getIntExtra("position", -1);
 
         adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
                 utils.getFilePaths());

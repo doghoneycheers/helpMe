@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -71,10 +72,11 @@ public class GridViewImageAdapter extends BaseAdapter {
 
     class OnImageClickListener implements OnClickListener {
 
-        int _postion;
+        int _postion=0;
 
         // constructor
         public OnImageClickListener(int position) {
+//            Log.d("ImageOnclick : ", String.valueOf(position));
             this._postion = position;
         }
 
@@ -82,8 +84,11 @@ public class GridViewImageAdapter extends BaseAdapter {
         public void onClick(View v) {
             // on selecting grid view image
             // launch full screen activity
+
+            Log.d("ImagePosition is", String.valueOf(_postion));
+
             Intent i = new Intent(_activity, FullScreenViewActivity.class);
-            i.putExtra("position", _postion);
+            i.putExtra("position", this._postion);
             _activity.startActivity(i);
         }
 
