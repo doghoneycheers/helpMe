@@ -24,19 +24,5 @@
             android:layout_height="wrap_content" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <!--<TextView-->
-    <!--android:id="@+id/load_sucess_textview"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Date" />-->
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="5dp"-->
-    <!--android:layout_weight="0.1"-->
-    <!--android:layout_margin="15dp"-->
-
-    <!--android:text="JSON 가져오기"-->
-    <!--android:id="@+id/button_main_requestjson"/>-->
 
 </RelativeLayout>
