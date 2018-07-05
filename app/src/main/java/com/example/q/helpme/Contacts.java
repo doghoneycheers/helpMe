@@ -6,8 +6,10 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     private ListView lv = null;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private String phone, name, contactName;
+    private ListAdapter listAdapter;
     //private String TAG="Contacts";
     //private static final int REQUEST_CONTACT=1;
 
@@ -61,8 +65,6 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
 //        Log.d(TAG,"Contact id is " + ContactsContract.Contacts._ID);
 //        Log.d(TAG,"Contact display name is " + ContactsContract.Contacts.DISPLAY_NAME);
-
-        Log.d("Contacts getting Cursor ","CURSER!!!");
 
         StringBuilder result = new StringBuilder();
         while(cursor.moveToNext())
@@ -106,14 +108,18 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arr_list){
 
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 // Cast the list view each item as text view
                 TextView item = (TextView) super.getView(position,convertView,parent);
 
 
+
                 // Set the list view item's text color
                 item.setTextColor(Color.parseColor("#000000")); // Black
+                Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chewy.ttf");
+                item.setTypeface(customFont);
 
                 // return the view
                 return item;
@@ -294,7 +300,24 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 for(int i=0;i<str1.length;i++)
                     arr_list.add(str1[i]);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, arr_list);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arr_list){
+
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent){
+                        // Cast the list view each item as text view
+                        TextView item = (TextView) super.getView(position,convertView,parent);
+
+
+                        // Set the list view item's text color
+                        item.setTextColor(Color.parseColor("#000000")); // Black
+                        Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chewy.ttf");
+                        item.setTypeface(customFont);
+
+                        // return the view
+                        return item;
+                    }
+
+                };
 
                 // Assign adapter to ListView
                 adapter.sort(new Comparator<String>(){

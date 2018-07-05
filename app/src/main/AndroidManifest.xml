@@ -27,17 +27,25 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:name="com.example.q.helpme.helpMe">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+
+        <activity android:name=".MainActivity">
+            
+        </activity>
+
         <activity
             android:name="com.example.q.helpme.FullScreenViewActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
         </activity>
+
         <activity android:name=".Camera"
             android:theme="@android:style/Theme.Holo.NoActionBar"/>
 
