@@ -11,6 +11,7 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listview_contacts" />
+        android:id="@+id/listview_contacts"
+        />
 
 </android.support.v4.widget.SwipeRefreshLayout>

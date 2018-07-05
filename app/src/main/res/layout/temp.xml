@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/textview_exchange_listviewheader2"
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Price" />
         <!--<TextView-->

@@ -210,7 +210,6 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                 //dlgSecond = (EditText) dlg.findViewById(R.id.editText2);
                 dlgCalView = (TextView) dlg.findViewById(R.id.textView3);
                 dlgNation = dlg.findViewById(R.id.currency_nation);
-                dlgNation.setText(Nation);
 
                 Button okDialogButton = (Button) dlg.findViewById(R.id.btnConvert);
                 okDialogButton.setOnClickListener(okDlgCalculator);
@@ -287,7 +286,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
 
                                 // Set the list view item's text color
-                                item.setTextColor(Color.parseColor("#000000"));
+                                item.setTextColor(Color.parseColor("#ffffffff"));
 
                                 // return the view
                                 return item;

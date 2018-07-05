@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     public Contacts(){ }
     private ListView lv = null;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private String phone, name, contactName;
     //private String TAG="Contacts";
     //private static final int REQUEST_CONTACT=1;
 
@@ -100,7 +102,22 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         for(int i=0;i<str1.length;i++)
             arr_list.add(str1[i]);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, arr_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arr_list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Cast the list view each item as text view
+                TextView item = (TextView) super.getView(position,convertView,parent);
+
+
+                // Set the list view item's text color
+                item.setTextColor(Color.parseColor("#000000")); // Black
+
+                // return the view
+                return item;
+            }
+
+        };
 
         // Assign adapter to ListView
         adapter.sort(new Comparator<String>(){
@@ -111,6 +128,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             }
         });
         lv.setAdapter(adapter);
+
 
         ListViewExampleClickListener listViewExampleClickListener = new ListViewExampleClickListener();
         lv.setOnItemClickListener(listViewExampleClickListener);
@@ -130,8 +148,12 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             int a2 = rawString.indexOf(cmpName);
             int a1 = rawString.indexOf(cmpPhone)+7;
 
-            final String phone = rawString.substring(a1);
-            final String name = rawString.substring(0, a2);
+            if(a1==6){
+                phone="";
+            } else{
+                phone = rawString.substring(a1);
+            }
+            name = rawString.substring(0, a2);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -141,22 +163,45 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             builder.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    String contactID = null;
-                    ContentResolver contentResolver = getActivity().getContentResolver();
 
-                    Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+                    if(phone==""){
+                        String contactID = null;
+                        ContentResolver contentResolver = getActivity().getContentResolver();
 
-                    Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null,null,null);
+                        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Uri.encode(phone));
 
-                    if(cursor!=null){
-                        while(cursor.moveToNext()){
-                            //String contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
-                            contactID= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null,null,null);
+
+                        if(cursor!=null){
+                            while(cursor.moveToNext()){
+                                //contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                                contactID= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                            }
+                            cursor.close();
                         }
-                        cursor.close();
+
+                        Intent intent_contacts=new Intent(Intent.ACTION_EDIT, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Uri.encode(contactID)));
+                        startActivity(intent_contacts);
+
+                    }else{
+                        String contactID = null;
+                        ContentResolver contentResolver = getActivity().getContentResolver();
+
+                        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+
+                        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null,null,null);
+
+                        if(cursor!=null){
+                            while(cursor.moveToNext()){
+                                //contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                                contactID= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                            }
+                            cursor.close();
+                        }
+
+                        Intent intent_contacts=new Intent(Intent.ACTION_EDIT, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Uri.encode(contactID)));
+                        startActivity(intent_contacts);
                     }
-                    Intent intent_contacts=new Intent(Intent.ACTION_EDIT, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactID)));
-                    startActivity(intent_contacts);
 
                 }
             });
@@ -195,7 +240,6 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
     @Override
     public void onRefresh() {
-
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
