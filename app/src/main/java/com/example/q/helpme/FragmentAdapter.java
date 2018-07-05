@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
+import android.widget.Toast;
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {
     private int tabCount;
@@ -27,6 +28,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
             case 2 :
                 return new Temp();
             default:
+                Log.e("MainFragmentAdapter : ", "CANNOT GET FRAGMENTS");
                 return null;
         }
     }

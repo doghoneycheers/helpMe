@@ -209,13 +209,13 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                         Log.d(TAG,"ARRAYLIST is :: " + temp.exchangeRateList);
 
 //         Assign adapter to ListView
-//                        adapter.sort(new Comparator<String>(){
-//
-//                            @Override
-//                            public int compare(String arg1,String arg0){
-//                                return arg1.compareTo(arg0);
-//                            }
-//                        });
+                        adapter.sort(new Comparator<String>(){
+
+                            @Override
+                            public int compare(String arg1,String arg0){
+                                return arg1.compareTo(arg0);
+                            }
+                        });
                         temp.listView.setAdapter(adapter);
 
 //                        temp.textviewJSONText.setText(jsonString);

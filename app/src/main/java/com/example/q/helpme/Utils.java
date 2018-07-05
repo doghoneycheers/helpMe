@@ -45,21 +45,69 @@ public class Utils {
         this._context = context;
     }
 
-    // Reading file paths from SDCard
+//    public ArrayList<String> getFilePaths() {
+//        String[] projection = new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
+//        Uri imageURI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//        Cursor cur = this._context.getContentResolver().query(imageURI, projection, null, null, null);
+//        Log.i("ListingImages", " query count=" + cur.getCount());
+//        ArrayList<String> imagePaths = new ArrayList<>(cur.getCount());
+//        int rawCol = cur.getColumnIndex(MediaStore.Images.Media.DATA);
+//        if (cur.moveToFirst()) {
+//            do {
+//                imagePaths.add(cur.getString(rawCol));
+//            } while (cur.moveToNext());
+//        }
+//        return imagePaths;
+//    }
+
     public ArrayList<String> getFilePaths() {
-        String[] projection = new String[] { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
-        Uri imageURI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        Cursor cur = this._context.getContentResolver().query(imageURI, projection, null, null, null);
-        Log.i("ListingImages", " query count=" + cur.getCount());
-        ArrayList<String> imagePaths = new ArrayList<>(cur.getCount());
-        int rawCol = cur.getColumnIndex(MediaStore.Images.Media.DATA);
-        if (cur.moveToFirst()) {
-            do {
-                imagePaths.add(cur.getString(rawCol));
-            } while (cur.moveToNext());
+        ArrayList<String> filePaths = new ArrayList<String>();
+
+        File directory = new File(
+                android.os.Environment.getExternalStorageDirectory()
+                        + "/Pictures/");
+
+        // check for directory
+        if (directory.isDirectory()) {
+            // getting list of file paths
+            File[] listFiles = directory.listFiles();
+
+            // Check for count
+            if (listFiles.length > 0) {
+
+                // loop through all files
+                for (int i = 0; i < listFiles.length; i++) {
+
+                    // get file path
+                    String filePath = listFiles[i].getAbsolutePath();
+
+                    // check for supported file extension
+                    if (IsSupportedFile(filePath)) {
+                        // Add image path to array list
+                        filePaths.add(filePath);
+                    }
+                }
+            } else {
+                // image directory is empty
+                Toast.makeText(
+                        _context,
+                        AppConstant.PHOTO_ALBUM
+                                + " is empty. Please load some images in it !",
+                        Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            AlertDialog.Builder alert = new AlertDialog.Builder(_context);
+            alert.setTitle("Error!");
+            alert.setMessage(AppConstant.PHOTO_ALBUM
+                    + " directory path is not valid! Please set the image directory name AppConstant.java class");
+            alert.setPositiveButton("OK", null);
+            alert.show();
         }
-        return imagePaths;
+
+        return filePaths;
     }
+
 
     // Check supported file extensions
     private boolean IsSupportedFile(String filePath) {
