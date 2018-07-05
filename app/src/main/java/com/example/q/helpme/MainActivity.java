@@ -1,6 +1,7 @@
 package com.example.q.helpme;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,14 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ALL = 10;
     private static final String TAG = "MainActivity";
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         if( id == R.id.camera_category ) {
-
-        Log.d(TAG,"Camera icon is activated.");
-        return true;
+            // on selecting grid view image
+            // launch full screen activity
+            Intent i = new Intent(this, Camera.class);
+            Log.d(TAG,"Camera icon is activated.");
+            this.startActivity(i);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -100,14 +105,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     private void setTabAdapter() {
 
         // Creating TabPagerAdapter adapter
         viewPager = findViewById(R.id.pager);
         FragmentAdapter pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        Log.e(TAG, "Error On Setting Adapter");
 
         viewPager.setAdapter(pagerAdapter);
+        if(viewPager == null) {
+            Log.e(TAG, "Error On Setting Adapter");
+        }
+
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
