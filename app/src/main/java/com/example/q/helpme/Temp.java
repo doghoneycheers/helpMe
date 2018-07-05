@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Handler;
@@ -100,9 +101,25 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         listView = view.findViewById(R.id.listview_exchangerate);
         getJSON();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1,
-                exchangeRateList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, exchangeRateList)
+
+        {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Cast the list view each item as text view
+                TextView item = (TextView) super.getView(position,convertView,parent);
+
+                // Set the list view item's text color
+                item.setTextColor(Color.parseColor("#000000"));
+                Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chewy.ttf");
+                item.setTypeface(customFont);
+                // return the view
+                return item;
+            }
+
+        };
+
         Log.d(TAG,"ARRAYLIST is :: " + exchangeRateList);
 
 //         Assign adapter to ListView
@@ -163,6 +180,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                 //dlgSecond = (EditText) dlg.findViewById(R.id.editText2);
                 dlgCalView = (TextView) dlg.findViewById(R.id.textView3);
                 dlgNation = dlg.findViewById(R.id.currency_nation);
+                dlgNation.setText(Nation);
 
                 Button okDialogButton = (Button) dlg.findViewById(R.id.btnConvert);
                 okDialogButton.setOnClickListener(okDlgCalculator);
@@ -171,7 +189,6 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
             default:
                 break;
         }
-
         return dlg;
     }
 
@@ -209,7 +226,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
     private final MyHandler mHandler = new MyHandler(this);
 
-    private static class MyHandler extends Handler {
+    private class MyHandler extends Handler {
         private final WeakReference<Temp> weakReference;
 
         public MyHandler(Temp temp) {
@@ -237,12 +254,14 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
                                 // Cast the list view each item as text view
                                 TextView item = (TextView) super.getView(position,convertView,parent);
 
-
                                 // Set the list view item's text color
-                                item.setTextColor(Color.parseColor("#ffffffff"));
+                                item.setTextColor(Color.parseColor("#000000"));
+
+                                Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Chewy.ttf");
+                                item.setTypeface(customFont);
 
                                 // return the view
-                                return item;
+                               return item;
                             }
 
                         };

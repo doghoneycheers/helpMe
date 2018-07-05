@@ -5,33 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textview_exchange_listviewheader1"
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:text="Name" />
-
-        <TextView
-            android:id="@+id/textview_exchange_listviewheader2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Price" />
-        <!--<TextView-->
-        <!--android:id="@+id/textview_exchange_listviewheader3"-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="20dp"-->
-        <!--android:text="Date" />-->
-
-    </RelativeLayout>
+    android:orientation="vertical"
+    android:background="@color/floralwhite">
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
