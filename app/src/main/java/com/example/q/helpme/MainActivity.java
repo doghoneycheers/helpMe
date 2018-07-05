@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
-        tabLayout.addTab(tabLayout.newTab().setText("Pictures"));
-        tabLayout.addTab(tabLayout.newTab().setText("?"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.contact));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.gallery));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.exchange));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //ActivityCompat.requestPermissions(this, PERMISSIONS, 3);

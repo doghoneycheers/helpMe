@@ -26,8 +26,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
     private PhotoViewAttacher mAttacher;
 
     // constructor
-    public FullScreenImageAdapter(Activity activity,
-                                  ArrayList<String> imagePaths) {
+    public FullScreenImageAdapter(Activity activity, ArrayList<String> imagePaths) {
         this._activity = activity;
         this._imagePaths = imagePaths;
     }
@@ -49,8 +48,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
         inflater = (LayoutInflater) _activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View viewLayout = inflater.inflate(R.layout.layout_fullscreen_image, container,
-                false);
+        View viewLayout = inflater.inflate(R.layout.layout_fullscreen_image, container, false);
 
         imgDisplay = (ImageView) viewLayout.findViewById(R.id.imgDisplay);
 
@@ -79,6 +77,5 @@ public class FullScreenImageAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         ((ViewPager) container).removeView((RelativeLayout) object);
-
     }
 }

@@ -1,7 +1,12 @@
 package com.example.q.helpme;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
@@ -13,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,12 +50,21 @@ import java.util.TimerTask;
 import java.util.Timer;
 import android.content.Context;
 import android.graphics.Color;
+import android.widget.Toast;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Temp(){}
+
+    private static final int ID_CALCULAR = 0;
+    private Dialog dlg;
+    private EditText dlgFirst, dlgSecond;
+    private TextView dlgCalView, dlgNation;
+    private Double globalCurrency;
+    private String Nation;
 
     private static final String TAG = "apitest";
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -128,19 +144,19 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         Log.d(TAG,"ARRAYLIST is :: " + exchangeRateList);
 
 //         Assign adapter to ListView
-        adapter.sort(new Comparator<String>(){
+        Comparator<String> cmpAsc = new Comparator<String>(){
 
             @Override
             public int compare(String arg1,String arg0){
                 return arg1.compareTo(arg0);
             }
-        });
+        };
 
-
-
-
+        adapter.sort(cmpAsc);
         listView.setAdapter(adapter);
 
+        ListViewExampleClickListener listViewExampleClickListener = new ListViewExampleClickListener();
+        listView.setOnItemClickListener(listViewExampleClickListener);
 
 //
 //        getJSON();
@@ -151,10 +167,82 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 //        listView.setAdapter(adapter);
 //        Log.d(TAG,"Adapter Set");
 
-
-
         return view;
     }
+
+    private class ListViewExampleClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+            String rawString = listView.getItemAtPosition(position).toString();
+            int rawStringLength = rawString.length();
+
+            String cmpCharToValue=":";
+            int firstIndexToValue = rawString.indexOf(cmpCharToValue)+2;
+            int lastIndexToValue = rawStringLength-5;
+            globalCurrency = Double.parseDouble(rawString.substring(firstIndexToValue, lastIndexToValue));
+
+            String cmpCharToUSD=")";
+            int lastIndexToUSD=rawString.indexOf(cmpCharToUSD);
+            final String USD = rawString.substring(lastIndexToUSD-3, lastIndexToUSD);
+
+            int lastIndexToNation = rawString.length()-1;
+//            final String Nation = rawString.substring(0, lastIndexToNation);
+            Nation = rawString.substring(lastIndexToNation-3, lastIndexToNation);
+
+            createdDialog(ID_CALCULAR).show(); // Instead of showDialog(0);
+
+        }
+    }
+
+    protected Dialog createdDialog(int id) {
+        dlg = null;
+
+        switch (id) {
+            case ID_CALCULAR:
+
+                Context mContext = getContext();
+                dlg = new Dialog(mContext);
+                dlg.setContentView(R.layout.dialog_calculator_view);
+
+                dlgFirst = (EditText) dlg.findViewById(R.id.editText1);
+                //dlgSecond = (EditText) dlg.findViewById(R.id.editText2);
+                dlgCalView = (TextView) dlg.findViewById(R.id.textView3);
+                dlgNation = dlg.findViewById(R.id.currency_nation);
+                dlgNation.setText(Nation);
+
+                Button okDialogButton = (Button) dlg.findViewById(R.id.btnConvert);
+                okDialogButton.setOnClickListener(okDlgCalculator);
+
+                break;
+            default:
+                break;
+        }
+
+        return dlg;
+    }
+
+    private Button.OnClickListener okDlgCalculator =
+            new Button.OnClickListener() {
+
+                public void onClick(View v) {
+
+
+                    String getEdit = dlgFirst.getText().toString();
+                    if(getEdit.equals("")){
+                        Toast.makeText(getContext(), "값을 입력하세요.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    double calValue = Double.parseDouble(dlgFirst.getText().toString()) * globalCurrency;
+                    dlgCalView.setText(String.valueOf(calValue));
+                }
+            };
+
+
+
+
 
     @Override
     public void onRefresh() {
@@ -199,7 +287,7 @@ public class Temp extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
 
                                 // Set the list view item's text color
-                                item.setTextColor(Color.parseColor("#ffffffff"));
+                                item.setTextColor(Color.parseColor("#000000"));
 
                                 // return the view
                                 return item;

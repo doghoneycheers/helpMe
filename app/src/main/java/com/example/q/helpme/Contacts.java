@@ -31,12 +31,10 @@ import java.util.Comparator;
 
 public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public Contacts(){ }
-    ListView lv = null;
-    private String TAG="Contacts";
-
-    private static final int REQUEST_CONTACT=1;
-
+    private ListView lv = null;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    //private String TAG="Contacts";
+    //private static final int REQUEST_CONTACT=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,15 +52,13 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
         lv = view.findViewById(R.id.listview_contacts);
 
-//       lv.setOnItemClickListener();
-
         ContentResolver cr = getActivity().getContentResolver();
         Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
         int ididx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+        int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
 //        Log.d(TAG,"Contact id is " + ContactsContract.Contacts._ID);
 //        Log.d(TAG,"Contact display name is " + ContactsContract.Contacts.DISPLAY_NAME);
-        int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
 
         StringBuilder result = new StringBuilder();
         while(cursor.moveToNext())
@@ -73,9 +69,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?", new String[]{id},null);
             //Log.d(TAG,"Contact_id is " + ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
             int typeidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-
-            int numidx = cursor2.getColumnIndex(
-                    ContactsContract.CommonDataKinds.Phone.NUMBER);
+            int numidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 //            Log.d(TAG,"사용자 ID : " + cursor2.getString(0));
 //            Log.d(TAG,"사용자 이름 : " + cursor2.getString(1));
 
@@ -121,42 +115,33 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         ListViewExampleClickListener listViewExampleClickListener = new ListViewExampleClickListener();
         lv.setOnItemClickListener(listViewExampleClickListener);
 
-
-
         return view;
-
-
     }
 
     private class ListViewExampleClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            //String toastMessage = result.getText().toString() + " is selected ";
-//            Toast.makeText(getContext(),
-//                    "Selected",
-//                    Toast.LENGTH_SHORT
-//            ).show();
 
             String rawString = lv.getItemAtPosition(position).toString();
-            final String cmpPhone = "Mobile:";
-            final String cmpName=":";
+            String cmpPhone = "Mobile:";
+            String cmpName=":";
 
             int a2 = rawString.indexOf(cmpName);
             int a1 = rawString.indexOf(cmpPhone)+7;
+
             final String phone = rawString.substring(a1);
             final String name = rawString.substring(0, a2);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
             builder.setTitle(name);
             builder.setMessage(phone);
-
-            //final String finalPhone = phone;
 
             builder.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    String contactid = null;
+                    String contactID = null;
                     ContentResolver contentResolver = getActivity().getContentResolver();
 
                     Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
@@ -166,11 +151,11 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                     if(cursor!=null){
                         while(cursor.moveToNext()){
                             //String contactName = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup.DISPLAY_NAME));
-                            contactid= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                            contactID= cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
                         }
                         cursor.close();
                     }
-                    Intent intent_contacts=new Intent(Intent.ACTION_EDIT, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactid)));
+                    Intent intent_contacts=new Intent(Intent.ACTION_EDIT, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactID)));
                     startActivity(intent_contacts);
 
                 }
@@ -210,7 +195,7 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
     @Override
     public void onRefresh() {
-        //Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -219,9 +204,9 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
                 Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
                 int ididx = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+                int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
 //        Log.d(TAG,"Contact id is " + ContactsContract.Contacts._ID);
 //        Log.d(TAG,"Contact display name is " + ContactsContract.Contacts.DISPLAY_NAME);
-                int nameidx = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
 
                 StringBuilder result = new StringBuilder();
                 while(cursor.moveToNext())
@@ -230,11 +215,9 @@ public class Contacts extends Fragment implements SwipeRefreshLayout.OnRefreshLi
 
                     String id = cursor.getString(ididx);
                     Cursor cursor2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?", new String[]{id},null);
-                    //Log.d(TAG,"Contact_id is " + ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
+//Log.d(TAG,"Contact_id is " + ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
                     int typeidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-
-                    int numidx = cursor2.getColumnIndex(
-                            ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    int numidx = cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 //            Log.d(TAG,"사용자 ID : " + cursor2.getString(0));
 //            Log.d(TAG,"사용자 이름 : " + cursor2.getString(1));
 
