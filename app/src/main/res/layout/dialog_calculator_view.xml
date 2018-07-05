@@ -2,80 +2,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/azul_credito">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:fontFamily="@font/chewy"
+                android:text="@string/real_time_exchange_rate"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editText1"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" >
+                android:fontFamily="@font/chewy"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:inputType="">
 
                 <requestFocus />
             </EditText>
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/usd"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
-                android:text="+"
-                android:textAlignment="center" />
+                android:gravity="center_vertical"
+                android:text="@string/char_usd"
+                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="66dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
-                android:text="=" />
+                android:gravity="center_vertical"
+                android:text="@string/char_equal" />
 
             <TextView
                 android:id="@+id/textView3"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:elegantTextHeight="false"
+                android:fontFamily="@font/chewy"
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/currency_nation"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:fontFamily="sans-serif"
+                android:textSize="20sp"
+                android:gravity="center_vertical"/>
+
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+            <Button
+                android:id="@+id/btnConvert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/chewy"
+                android:text="@string/button_name_convertion"
+                android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/btnOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="계산하기" />
-
-        <Button
-            android:id="@+id/btnClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="닫기" />
+        </LinearLayout>
 
     </LinearLayout>
 

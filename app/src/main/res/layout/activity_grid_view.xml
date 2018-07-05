@@ -10,7 +10,7 @@
     android:numColumns="auto_fit"
     android:gravity="center"
     android:stretchMode="columnWidth"
-    android:background="#000000">
+    android:background="#FFFFFF">
 </GridView>
 </android.support.v4.widget.SwipeRefreshLayout>
     <!--android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->

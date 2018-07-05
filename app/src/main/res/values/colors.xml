@@ -10,4 +10,7 @@
     <color name="branco">#ffffff</color>
     <color name="amarelo_corrige">#cccc00</color>
     <color name="verde_confirma">#66b266</color>
+    <color name="brown">#541407</color>
+    <color name="lavender">#E6E6FA</color>
+    <color name="thistle">#D8BFD8</color>
 </resources>

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">helpMe</string>
+    <string name="app_name">App</string>
+    <string name="char_usd">$</string>
+    <string name="real_time_exchange_rate">Real-time Exchange Rate</string>
+    <string name="char_equal">=</string>
+    <string name="button_name_convertion">Convertion</string>
 </resources>
